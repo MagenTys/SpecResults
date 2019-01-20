@@ -1,3 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyTitle>SpecResults.UnitTests</AssemblyTitle>
+    <Configuration></Configuration>
+    <Description></Description>
+    <Company></Company>
+    <Product>SpecResults.UnitTests</Product>
+    <Copyright>Copyright ©  2014</Copyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <InformationalVersion>1.0.0</InformationalVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+  </PropertyGroup>
+
+
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
