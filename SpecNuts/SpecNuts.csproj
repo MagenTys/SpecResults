@@ -1,5 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <AssemblyTitle>SpecNuts</AssemblyTitle>
+    <Configuration></Configuration>
+    <Description>A forked from SpecResults project to provide the ability to generate test result in cucumber format.</Description>
+    <Company>William Sia</Company>
+    <Product>SpecNuts</Product>
+    <Copyright>Copyright ©  2016</Copyright>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <InformationalVersion>1.1.0</InformationalVersion>
+    <FileVersion>1.1.0.0</FileVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Library</OutputType>
