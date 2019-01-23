@@ -78,13 +78,9 @@
     <Folder Include="Model\" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="App.config.transform" />
-    <None Remove="App.config" />
     <None Remove="SpecNuts.nuspec" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App.config.transform" />
-    <None Include="App.config" />
     <None Include="SpecNuts.nuspec" />
   </ItemGroup>
 

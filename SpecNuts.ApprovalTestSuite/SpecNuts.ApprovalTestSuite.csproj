@@ -86,7 +86,6 @@
     <None Remove="approvals\SpecNuts.Json.JsonReporter\received.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App.config.transform" />
     <Content Include="approvals\SpecNuts.Json.JsonReporter\approval.txt" />
     <Content Include="approvals\SpecNuts.Json.JsonReporter\received.txt" />
   </ItemGroup>
@@ -103,5 +102,10 @@
     </Compile>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="specflow.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
 </Project>
