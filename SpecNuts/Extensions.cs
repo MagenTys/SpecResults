@@ -44,7 +44,7 @@ namespace SpecNuts
 		{
 			return typeof (ScenarioContext)
 				.GetProperty("PendingSteps", BindingFlags.NonPublic | BindingFlags.Instance)
-				.GetValue(ScenarioContext.Current, null) as IEnumerable<string>
+				.GetValue(scenarioContenxt, null) as IEnumerable<string>
 			       ?? new string[0];
 		}
 

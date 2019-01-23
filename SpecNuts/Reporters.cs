@@ -32,7 +32,7 @@ namespace SpecNuts
 			}
 		}
 
-		internal static Step CreateStep(DateTime starttime, MethodBase method, params object[] args)
+		internal static Step CreateStep(ScenarioContext scenarioContext, DateTime starttime, MethodBase method, params object[] args)
 		{
 			var methodName = method.Name;
 
@@ -40,7 +40,7 @@ namespace SpecNuts
 			{
 				Name = ScenarioStepContext.Current.StepInfo.Text,
 				StartTime = starttime,
-				Keyword = ScenarioContext.Current.CurrentScenarioBlock + " ",
+				Keyword = scenarioContext.CurrentScenarioBlock + " ",
 				Id = ScenarioStepContext.Current.StepInfo.Text.Replace(" ", "-").ToLower()
 			};
 
@@ -137,12 +137,12 @@ namespace SpecNuts
 			return step;
 		}
 
-		internal static async Task ExecuteStep(Func<Task> stepFunc, params object[] args)
+		internal static async Task ExecuteStep(ScenarioContext scenarioContext,Func<Task> stepFunc, params object[] args)
 		{
-			await ExecuteStep(stepFunc, null, args);
+			await ExecuteStep(scenarioContext, stepFunc, null, args);
 		}
 
-		internal static async Task ExecuteStep(Func<Task> stepFunc, MethodBase methodBase, params object[] args)
+		internal static async Task ExecuteStep(ScenarioContext scenarioContext, Func<Task> stepFunc, MethodBase methodBase, params object[] args)
 		{
 			methodBase = methodBase ?? stepFunc.Method;
 
@@ -153,7 +153,7 @@ namespace SpecNuts
 			{
 				currentSteps.Add(reporter, reporter.CurrentStep);
 
-				var step = CreateStep(starttime, methodBase, args);
+				var step = CreateStep(scenarioContext, starttime, methodBase, args);
 
 				var stepContainer = reporter.CurrentScenario;
 				stepContainer.Steps.Add(step);

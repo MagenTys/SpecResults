@@ -64,7 +64,7 @@ namespace SpecNuts
 		}
 
 		[BeforeFeature]
-		internal static void BeforeFeature()
+		internal static void BeforeFeature(FeatureContext featureContext)
 		{
 			var starttime = CurrentRunTime;
 
@@ -89,14 +89,14 @@ namespace SpecNuts
 
 			foreach (var reporter in reporters)
 			{
-				var featureId = FeatureContext.Current.FeatureInfo.Title.Replace(" ", "-").ToLower();
+				var featureId = featureContext.FeatureInfo.Title.Replace(" ", "-").ToLower();
 				var feature = new Feature
 				{
-					Tags = FeatureContext.Current.FeatureInfo.Tags.Select(tag => new Tag() { Name = "@" + tag }).ToList(),
+					Tags = featureContext.FeatureInfo.Tags.Select(tag => new Tag() { Name = "@" + tag }).ToList(),
 					Elements = new List<Scenario>(),
 					StartTime = starttime,
-					Name = FeatureContext.Current.FeatureInfo.Title,
-					Description = FeatureContext.Current.FeatureInfo.Description,
+					Name = featureContext.FeatureInfo.Title,
+					Description = featureContext.FeatureInfo.Description,
 					Id = featureId,
 					Uri = $"/{featureId}"
 				};
@@ -109,7 +109,7 @@ namespace SpecNuts
 		}
 
 		[BeforeScenario]
-		internal static void BeforeScenario()
+		internal static void BeforeScenario(ScenarioContext scenarioContext)
 		{
 			var starttime = CurrentRunTime;
 
@@ -117,11 +117,11 @@ namespace SpecNuts
 			{
 				var scenario = new Scenario
 				{
-					Tags = ScenarioContext.Current.ScenarioInfo.Tags.Select(tag => new Tag() { Name = "@" + tag }).ToList(),
+					Tags = scenarioContext.ScenarioInfo.Tags.Select(tag => new Tag() { Name = "@" + tag }).ToList(),
 					StartTime = starttime,
-					Name = ScenarioContext.Current.ScenarioInfo.Title,
+					Name = scenarioContext.ScenarioInfo.Title,
 					Steps = new List<Step>(),
-					Description = ScenarioContext.Current.ScenarioInfo.Title
+					Description = scenarioContext.ScenarioInfo.Title
 				};
 
 				reporter.CurrentFeature.Elements.Add(scenario);
