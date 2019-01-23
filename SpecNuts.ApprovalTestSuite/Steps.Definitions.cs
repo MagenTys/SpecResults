@@ -25,6 +25,8 @@ namespace SpecResults.ApprovalTestSuite
 		[When(@"the tests run")]
 		public async Task WhenTheTestsRun()
 		{
+            // Prevents CS1998
+            await Task.Run(() => { });
 		}
 
 		[Then(@"a report is generated")]
