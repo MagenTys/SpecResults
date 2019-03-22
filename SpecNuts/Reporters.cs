@@ -35,13 +35,14 @@ namespace SpecNuts
 		internal static Step CreateStep(ScenarioContext scenarioContext, DateTime starttime, MethodBase method, params object[] args)
 		{
 			var methodName = method.Name;
+            var stepInfo = ScenarioStepContext.Current.StepInfo;
 
-			var step = new Step
+            var step = new Step
 			{
-				Name = ScenarioStepContext.Current.StepInfo.Text,
+				Name = stepInfo.Text,
 				StartTime = starttime,
 				Keyword = scenarioContext.CurrentScenarioBlock + " ",
-				Id = ScenarioStepContext.Current.StepInfo.Text.Replace(" ", "-").ToLower()
+				Id = stepInfo.Text.Replace(" ", "-").ToLower()
 			};
 
 			var attr = method.GetCustomAttributes(true).OfType<StepDefinitionBaseAttribute>().FirstOrDefault();
@@ -131,8 +132,6 @@ namespace SpecNuts
 					}
 				}
 			}
-
-			step.Name = ScenarioStepContext.Current.StepInfo.Text;
 
 			return step;
 		}
