@@ -2,6 +2,8 @@
 using System.Linq;
 using SpecNuts.Model;
 using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Bindings;
+using TechTalk.SpecFlow.Bindings.Reflection;
 
 namespace SpecNuts
 {
@@ -63,7 +65,31 @@ namespace SpecNuts
 			}
 		}
 
-		[BeforeFeature]
+        [AfterStep]
+        internal static void AfterStep(ScenarioContext scenarioContext)
+        {
+            var endtime = CurrentRunTime;
+            var result = scenarioContext.ScenarioExecutionStatus.ToTestResult();
+            var error = scenarioContext.TestError?.ToExceptionInfo().Message;
+            error = (error == null && result == TestResult.pending) ? new PendingStepException().ToExceptionInfo().Message : string.Empty;
+
+            foreach (var reporter in reporters.ToArray())
+            {
+                var step = reporter.CurrentStep;
+                step.EndTime = CurrentRunTime;
+                step.Result = new StepResult
+                {
+                    Duration = (long)((endtime - reporter.CurrentStep.StartTime).TotalMilliseconds * 1000000),
+                    Status = result,
+                    Error = error
+                };
+                OnFinishedStep(reporter);
+                reporter.CurrentStep = null;
+            }
+        }
+
+
+        [BeforeFeature]
 		internal static void BeforeFeature(FeatureContext featureContext)
 		{
 			var starttime = CurrentRunTime;
@@ -136,5 +162,25 @@ namespace SpecNuts
 		{
 			_testrunIsFirstFeature = true;
 		}
-	}
+
+        [BeforeStep]
+        internal static void BeforeStep(ScenarioContext scenarioContext)
+        {
+            var starttime = CurrentRunTime;
+            var stepInfo = ScenarioStepContext.Current.StepInfo;
+            var binding = stepInfo.BindingMatch.StepBinding as StepDefinitionBinding;
+            var method = binding?.Method as RuntimeBindingMethod;
+
+            foreach (var reporter in reporters)
+            {
+                var step = CreateStep(scenarioContext, starttime);
+
+                reporter.CurrentScenario.Steps.Add(step);
+                reporter.CurrentStep = step;
+
+                OnStartedStep(reporter);
+            }
+        }
+
+    }
 }
