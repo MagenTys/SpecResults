@@ -1,3 +1,5 @@
+before_build:
+  - nuget restore
 deploy:
   provider: NuGet
   api_key:
