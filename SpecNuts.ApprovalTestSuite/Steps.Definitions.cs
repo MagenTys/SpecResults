@@ -95,7 +95,7 @@ namespace SpecResults.ApprovalTestSuite
 		[When(@"a child step was executed")]
 		public void WhenAChildStepWasExecuted()
 		{
-			ReportStep(_scenarioContext, WhenTheTestsRun);
+			ReportStep(_scenarioContext, WhenTheTestsRun).Wait();
 		}
 
 		[Given(@"a ""(.*)"" scenario is specified with a multi-line argument")]
