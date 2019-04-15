@@ -40,11 +40,26 @@ namespace SpecNuts
 			return TestResult.passed;
 		}
 
-		internal static IEnumerable<string> GetPendingSteps(this ScenarioContext scenarioContenxt)
+        internal static TestResult ToTestResult(this ScenarioExecutionStatus executionStatus)
+        {
+            switch (executionStatus)
+            {
+                case ScenarioExecutionStatus.OK:
+                    return TestResult.passed;
+                case ScenarioExecutionStatus.StepDefinitionPending:
+                    return TestResult.pending;
+                case ScenarioExecutionStatus.TestError:
+                    return TestResult.failed;
+                default:
+                    return TestResult.undefined;
+            }
+        }
+
+        internal static IEnumerable<string> GetPendingSteps(this ScenarioContext scenarioContenxt)
 		{
 			return typeof (ScenarioContext)
 				.GetProperty("PendingSteps", BindingFlags.NonPublic | BindingFlags.Instance)
-				.GetValue(ScenarioContext.Current, null) as IEnumerable<string>
+				.GetValue(scenarioContenxt, null) as IEnumerable<string>
 			       ?? new string[0];
 		}
 

@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
-using SpecNuts.ReportingAspect;
+using TechTalk.SpecFlow;
 
 namespace SpecNuts
 {
-	[Reporting]
 	public abstract class ReportingStepDefinitions : ContextBoundObject
 	{
-		public async Task ReportStep(Func<Task> stepFunc, params object[] args)
+		public async Task ReportStep(ScenarioContext scenarioContext, Func<Task> stepFunc, params object[] args)
 		{
-			await Reporters.ExecuteStep(stepFunc, args);
+			await Reporters.ExecuteStep(scenarioContext, stepFunc, args);
 		}
 	}
 }

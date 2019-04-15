@@ -30,21 +30,30 @@ namespace SpecNuts
 				}
 				return DateTime.Now;
 			}
-		}
+        }
 
-		internal static Step CreateStep(DateTime starttime, MethodBase method, params object[] args)
+        private static void addStepRows(ref Step step, Table table)
+        {
+            step.Rows = new List<Row> { new Row() { Cells = table.Header.ToList() } };
+            foreach (var tableRow in table.Rows)
+            {
+                step.Rows.Add(new Row() { Cells = tableRow.Select(x => x.Value).ToList() });
+            }
+        }
+
+        internal static Step CreateStep(ScenarioContext scenarioContext, DateTime starttime, MethodBase method = null, params object[] args)
 		{
-			var methodName = method.Name;
+            var stepInfo = ScenarioStepContext.Current.StepInfo;
 
-			var step = new Step
+            var step = new Step
 			{
-				Name = ScenarioStepContext.Current.StepInfo.Text,
+				Name = stepInfo.Text,
 				StartTime = starttime,
-				Keyword = ScenarioContext.Current.CurrentScenarioBlock + " ",
-				Id = ScenarioStepContext.Current.StepInfo.Text.Replace(" ", "-").ToLower()
+				Keyword = scenarioContext.CurrentScenarioBlock + " ",
+				Id = stepInfo.Text.Replace(" ", "-").ToLower()
 			};
 
-			var attr = method.GetCustomAttributes(true).OfType<StepDefinitionBaseAttribute>().FirstOrDefault();
+			var attr = method?.GetCustomAttributes(true).OfType<StepDefinitionBaseAttribute>().FirstOrDefault();
 			if (attr != null)
 			{
 				// Handle regex style
@@ -58,16 +67,7 @@ namespace SpecNuts
 						var table = arg as Table;
 						if (table != null)
 						{
-
-							step.Rows = new List<Row> { new Row() { Cells = table.Header.ToList() } };
-
-							foreach (var tableRow in table.Rows)
-							{
-								step.Rows.Add(new Row()
-								{
-									Cells = tableRow.Select(x => x.Value).ToList()
-								});
-							}
+                            addStepRows(ref step, table);
 						}
 						else
 						{
@@ -86,6 +86,7 @@ namespace SpecNuts
 				}
 				else
 				{
+                    var methodName = method.Name;
 					if (methodName.Contains('_'))
 					{
 						// underscore style
@@ -99,15 +100,7 @@ namespace SpecNuts
 							var table = arg as Table;
 							if (table != null)
 							{
-								step.Rows = new List<Row> { new Row() { Cells = table.Header.ToList() } };
-
-								foreach (var tableRow in table.Rows)
-								{
-									step.Rows.Add(new Row()
-									{
-										Cells = tableRow.Select(x => x.Value).ToList()
-									});
-								}
+                                addStepRows(ref step, table);
 							}
 							else
 							{
@@ -131,18 +124,25 @@ namespace SpecNuts
 					}
 				}
 			}
+            else
+            {
+                var table = stepInfo.Table;
+                if(table != null)
+                {
+                    addStepRows(ref step, table);
+                }
+                step.MultiLineParameter = stepInfo.MultilineText;
+            }
 
-			step.Name = ScenarioStepContext.Current.StepInfo.Text;
-
-			return step;
+            return step;
 		}
 
-		internal static async Task ExecuteStep(Func<Task> stepFunc, params object[] args)
+		internal static async Task ExecuteStep(ScenarioContext scenarioContext,Func<Task> stepFunc, params object[] args)
 		{
-			await ExecuteStep(stepFunc, null, args);
+			await ExecuteStep(scenarioContext, stepFunc, null, args);
 		}
 
-		internal static async Task ExecuteStep(Func<Task> stepFunc, MethodBase methodBase, params object[] args)
+		internal static async Task ExecuteStep(ScenarioContext scenarioContext, Func<Task> stepFunc, MethodBase methodBase, params object[] args)
 		{
 			methodBase = methodBase ?? stepFunc.Method;
 
@@ -153,7 +153,7 @@ namespace SpecNuts
 			{
 				currentSteps.Add(reporter, reporter.CurrentStep);
 
-				var step = CreateStep(starttime, methodBase, args);
+				var step = CreateStep(scenarioContext, starttime, methodBase, args);
 
 				var stepContainer = reporter.CurrentScenario;
 				stepContainer.Steps.Add(step);

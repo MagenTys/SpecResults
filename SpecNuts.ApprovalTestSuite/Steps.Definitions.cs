@@ -9,7 +9,13 @@ namespace SpecResults.ApprovalTestSuite
 	[Binding]
 	public partial class Steps : ReportingStepDefinitions
 	{
-		[BeforeTestRun]
+        private readonly ScenarioContext _scenarioContext;
+        public Steps(ScenarioContext scenarioContext)
+        {
+            _scenarioContext = scenarioContext;
+        }
+
+        [BeforeTestRun]
 		public static void BeforeTestRun()
 		{
 			Reporters.FixedRunTime = DateTime.MinValue;
@@ -25,6 +31,8 @@ namespace SpecResults.ApprovalTestSuite
 		[When(@"the tests run")]
 		public async Task WhenTheTestsRun()
 		{
+            // Prevents CS1998
+            await Task.Run(() => { });
 		}
 
 		[Then(@"a report is generated")]
@@ -50,7 +58,7 @@ namespace SpecResults.ApprovalTestSuite
 		[When(@"a step is not implemented")]
 		public void WhenAStepIsNotImplemented()
 		{
-			ScenarioContext.Current.Pending();
+			_scenarioContext.Pending();
 		}
 
 		[When]
@@ -87,7 +95,7 @@ namespace SpecResults.ApprovalTestSuite
 		[When(@"a child step was executed")]
 		public void WhenAChildStepWasExecuted()
 		{
-			ReportStep(WhenTheTestsRun);
+			ReportStep(_scenarioContext, WhenTheTestsRun).Wait();
 		}
 
 		[Given(@"a ""(.*)"" scenario is specified with a multi-line argument")]
