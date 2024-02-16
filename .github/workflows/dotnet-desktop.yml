@@ -50,7 +50,7 @@ jobs:
 
     strategy:
       matrix:
-        configuration: [Debug, Release]
+        configuration: [Release]
 
     runs-on: windows-latest  # For a list of available runner types, refer to
                              # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
@@ -58,7 +58,7 @@ jobs:
     env:
       Solution_Name: SpecNuts                         # Replace with your solution name, i.e. MyWpfApp.sln.
       Test_Project_Path: SpecNuts\tests\SpecNuts.Test.csproj                 # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
-      Wap_Project_Directory: SpecNuts\SpecNuts    # Replace with the Wap project directory relative to the solution, i.e. MyWpfApp.Package.
+      Wap_Project_Directory: SpecNuts    # Replace with the Wap project directory relative to the solution, i.e. MyWpfApp.Package.
 
     steps:
     - name: Checkout
