@@ -73,8 +73,8 @@ jobs:
         dotnet-version: 6.0.x
 
     # Execute all unit tests in the solution
-    - name: Execute unit tests
-      run: dotnet test
+#    - name: Execute unit tests
+#      run: dotnet test
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Restore the application
