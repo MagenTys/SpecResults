@@ -78,7 +78,7 @@ jobs:
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Restore the application
-      run: dotnet build $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration 
+      run: dotnet build $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration -o ${{ env.Wap_Project_Directory }}\AppPackages
       env:
         Configuration: ${{ matrix.configuration }}
 
