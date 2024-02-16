@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ApprovalTests.Core;
 using ApprovalTests.Reporters;
+using ApprovalTests.Reporters.TestFrameworks;
 using SpecNuts;
 using Approvals = ApprovalTests.Approvals;
 
