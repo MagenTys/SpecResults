@@ -1,9 +1,9 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecNuts", "SpecNuts\SpecNuts.csproj", "{EABA391E-6B65-4E5C-8842-3D71A5F97B4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpecNuts", "SpecNuts\SpecNuts.csproj", "{EABA391E-6B65-4E5C-8842-3D71A5F97B4F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "etc", "etc", "{F06106DF-9C40-4F90-9F2A-5B9FF00874BC}"
 	ProjectSection(SolutionItems) = preProject
@@ -23,11 +23,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{0A9B592E-B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0775EB2A-C4C3-421A-BF01-C4E3C96BD52B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecNuts.Json", "SpecNuts.Json\SpecNuts.Json.csproj", "{C830C923-5398-4F28-99C2-1592EE5F4F7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpecNuts.Json", "SpecNuts.Json\SpecNuts.Json.csproj", "{C830C923-5398-4F28-99C2-1592EE5F4F7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecNuts.UnitTests", "SpecNuts.UnitTests\SpecNuts.UnitTests.csproj", "{95C18142-2C66-4CA9-8F63-A9B7F65A1820}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpecNuts.UnitTests", "SpecNuts.UnitTests\SpecNuts.UnitTests.csproj", "{95C18142-2C66-4CA9-8F63-A9B7F65A1820}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecNuts.ApprovalTestSuite", "SpecNuts.ApprovalTestSuite\SpecNuts.ApprovalTestSuite.csproj", "{BBA703FA-94C4-437F-9961-2A321163988A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpecNuts.ApprovalTestSuite", "SpecNuts.ApprovalTestSuite\SpecNuts.ApprovalTestSuite.csproj", "{BBA703FA-94C4-437F-9961-2A321163988A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{934F2AA5-2817-413A-A950-EE8A304AD294}"
 	ProjectSection(SolutionItems) = preProject
